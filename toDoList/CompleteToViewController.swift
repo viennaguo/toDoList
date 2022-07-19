@@ -10,8 +10,8 @@ import UIKit
 class CompleteToViewController: UIViewController {
     
     var previousVC = ToDoTableViewController () //accessing dta from previous screen
-    var selectedToDo = ToDo() // creating instance of classToDo
-    
+   // var selectedToDo = ToDo() // creating instance of classToDo
+    var selectedToDo : ToDoCD?
     
     
     
@@ -19,12 +19,18 @@ class CompleteToViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = selectedToDo.name
+        titleLabel.text = selectedToDo?.name
 
         // Do any additional setup after loading the view.
     }
     
     @IBAction func completeTapped(_ sender: Any) {
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+           if let theToDo = selectedToDo {
+             context.delete(theToDo)
+             navigationController?.popViewController(animated: true)
+           }
+         }
     }
     
     /*
